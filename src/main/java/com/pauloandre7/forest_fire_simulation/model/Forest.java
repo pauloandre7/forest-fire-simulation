@@ -21,8 +21,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Forest {
     
-    private final int rows;
-    private final int cols;
+    private final int height;
+    private final int width;
 
     @Getter(AccessLevel.NONE) // will not creat the getter for this one.
     private final List<List<Cell>> cells;
@@ -31,16 +31,16 @@ public class Forest {
     private final double baseBurningProbability;
 
     @JsonCreator
-    public Forest(@JsonProperty("rows") int rows,
-                  @JsonProperty("cols") int cols,
+    public Forest(@JsonProperty("rows") int height,
+                  @JsonProperty("cols") int width,
                   @JsonProperty("cells") List<List<Cell>> cells,
                   @JsonProperty("windDirection") WindDirection windDirection,
                   @JsonProperty("windSpeed") double windSpeed,
                   @JsonProperty("baseBurningProbability") double baseBurningProbability
 
     ){
-        this.rows = rows;
-        this.cols = cols;
+        this.height = height;
+        this.width = width;
         this.cells = cells;
         this.windDirection = windDirection;
         this.windSpeed = windSpeed;
