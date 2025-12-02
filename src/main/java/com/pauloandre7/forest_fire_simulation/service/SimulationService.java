@@ -15,6 +15,7 @@ import com.pauloandre7.forest_fire_simulation.model.WindDirection;
 @Service
 public class SimulationService {
     
+    private final double BASE_BURNING_PROBABILITY = 0.4;
     private Forest currentForest;
     
     public SimulationService(Forest currentForest){
@@ -27,8 +28,10 @@ public class SimulationService {
 
         List<List<Cell>> florestCells = new ArrayList<>();
         List<Cell> lineCells = new ArrayList<>();
+
         // get the values of Enum CellState and parse to List.
         List<CellState> cellStates = new ArrayList<>(Arrays.asList(CellState.values()));
+        
         // remove Burning from the list, because i don't want to randomize this value right now
         cellStates.remove(CellState.BURNING);
 
@@ -52,7 +55,7 @@ public class SimulationService {
         List<WindDirection> windDirections = new ArrayList<>(Arrays.asList(WindDirection.values()));
         WindDirection randomWindDirection = windDirections.get(random.nextInt(windDirections.size()));
 
-        this.currentForest = new Forest(height, width, florestCells, randomWindDirection, random.nextDouble(1.0), burningTime);
+        this.currentForest = new Forest(height, width, florestCells, randomWindDirection, random.nextDouble(1.0), BASE_BURNING_PROBABILITY);
     }
 
 
