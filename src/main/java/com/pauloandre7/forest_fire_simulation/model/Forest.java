@@ -28,6 +28,7 @@ public class Forest {
     private final List<List<Cell>> cells;
     private final WindDirection windDirection;
     private final double windSpeed;
+    private final int burningTime;
     private final double baseBurningProbability;
 
     @JsonCreator
@@ -36,6 +37,7 @@ public class Forest {
                   @JsonProperty("cells") List<List<Cell>> cells,
                   @JsonProperty("windDirection") WindDirection windDirection,
                   @JsonProperty("windSpeed") double windSpeed,
+                  @JsonProperty("burningTime") int burningTime,
                   @JsonProperty("baseBurningProbability") double baseBurningProbability
 
     ){
@@ -44,6 +46,7 @@ public class Forest {
         this.cells = cells;
         this.windDirection = windDirection;
         this.windSpeed = windSpeed;
+        this.burningTime = burningTime;
         this.baseBurningProbability = baseBurningProbability;
     }
 
@@ -53,6 +56,7 @@ public class Forest {
         this.cells = originalForest.cells;
         this.windDirection = originalForest.windDirection;
         this.windSpeed = originalForest.windSpeed;
+        this.burningTime = originalForest.burningTime;
         this.baseBurningProbability = originalForest.baseBurningProbability;
     }
 
