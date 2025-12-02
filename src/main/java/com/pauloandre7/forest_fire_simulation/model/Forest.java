@@ -47,6 +47,15 @@ public class Forest {
         this.baseBurningProbability = baseBurningProbability;
     }
 
+    public Forest(Forest originalForest){
+        this.height = originalForest.height;
+        this.width = originalForest.width;
+        this.cells = originalForest.cells;
+        this.windDirection = originalForest.windDirection;
+        this.windSpeed = originalForest.windSpeed;
+        this.baseBurningProbability = originalForest.baseBurningProbability;
+    }
+
     public List<List<Cell>> getCells(){
         // This method return the list, but she cannot be modified
         // This class cannot let the matriz be modified by a set() method.
