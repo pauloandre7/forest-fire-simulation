@@ -38,7 +38,7 @@ public class SimulationService {
         Random random = new Random();
 
         List<List<Cell>> forestCells = new ArrayList<>();
-        List<Cell> lineCells = new ArrayList<>();
+        
 
         // get the values of Enum CellState and parse to List.
         List<CellState> cellStates = new ArrayList<>(Arrays.asList(CellState.values()));
@@ -47,8 +47,8 @@ public class SimulationService {
         cellStates.remove(CellState.BURNING);
 
         for(int i = 0; i < height; i++){
-
-            lineCells.clear();
+            List<Cell> lineCells = new ArrayList<>();
+            
             for(int j = 0; j < height; j++){
                 
                 int randomIndex = random.nextInt(cellStates.size());
