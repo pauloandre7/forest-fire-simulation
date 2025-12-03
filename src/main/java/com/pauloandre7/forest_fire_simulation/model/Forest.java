@@ -26,7 +26,7 @@ public class Forest {
 
     @Getter(AccessLevel.NONE) // will not creat the getter for this one.
     private final List<List<Cell>> cells;
-    private final WindDirection windDirection;
+    private final Direction windDirection;
     private final double windSpeed;
     private final int burningTime;
     private final double baseBurningProbability;
@@ -35,7 +35,7 @@ public class Forest {
     public Forest(@JsonProperty("rows") int height,
                   @JsonProperty("cols") int width,
                   @JsonProperty("cells") List<List<Cell>> cells,
-                  @JsonProperty("windDirection") WindDirection windDirection,
+                  @JsonProperty("windDirection") Direction windDirection,
                   @JsonProperty("windSpeed") double windSpeed,
                   @JsonProperty("burningTime") int burningTime,
                   @JsonProperty("baseBurningProbability") double baseBurningProbability
