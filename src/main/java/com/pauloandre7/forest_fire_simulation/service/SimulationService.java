@@ -25,9 +25,7 @@ public class SimulationService {
     private Forest currentForest;
     private final ExecutorService executor;
 
-    public SimulationService(Forest currentForest){
-        this.currentForest = currentForest;
-        
+    public SimulationService(){
         // get the amount of avaliable threads and creates a pool for them
         int numberOfThreads = Runtime.getRuntime().availableProcessors();
         executor = Executors.newFixedThreadPool(numberOfThreads);
