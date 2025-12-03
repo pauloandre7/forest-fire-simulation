@@ -48,7 +48,7 @@ public class SimulationService {
 
         for(int i = 0; i < height; i++){
             List<Cell> lineCells = new ArrayList<>();
-            
+
             for(int j = 0; j < height; j++){
                 
                 int randomIndex = random.nextInt(cellStates.size());
@@ -104,7 +104,7 @@ public class SimulationService {
 
             for (Future<Forest> f : results) f.get();
             
-            this.currentForest = new Forest(bufferForest);
+            this.currentForest = bufferForest;
         } catch(InterruptedException | ExecutionException e){
             e.printStackTrace();
         }
