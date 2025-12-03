@@ -120,6 +120,12 @@ public class SimulationTask implements Callable<Forest>{
         for(int i = startCol; i < finalCol; i++){
             Cell currentCell = currentForest.getCells().get(rowOfWork).get(i);
 
+            // if the cell is already burning, them will use the method to 
+            // decrease the timer of burning or turn into ash
+            if(currentCell.getState() == CellState.BURNING) {
+                bufferForest.getCells().get(rowOfWork).get(i).updateBurningState();
+            }
+
             // continue to next cell if this one is Ash, burning or empty.
             if(currentCell.getState() != CellState.VEGETATION) continue;
 
