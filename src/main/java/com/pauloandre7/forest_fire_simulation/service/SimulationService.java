@@ -47,7 +47,7 @@ public class SimulationService {
         for(int i = 0; i < height; i++){
             List<Cell> lineCells = new ArrayList<>();
 
-            for(int j = 0; j < height; j++){
+            for(int j = 0; j < width; j++){
                 
                 int randomIndex = random.nextInt(cellStates.size());
                 double randomMoisture = random.nextDouble(1.0);
