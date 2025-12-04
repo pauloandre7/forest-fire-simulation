@@ -31,7 +31,7 @@ public class SimulationTask implements Callable<Forest>{
         this.currentForest = originalForest;
         this.bufferForest = bufferForest;
         this.rowOfWork = rowOfWork;
-        this. startCol = startCol;
+        this.startCol = startCol;
         this.finalCol = finalCol;
     }
 
