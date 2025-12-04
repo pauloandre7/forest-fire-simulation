@@ -26,7 +26,7 @@ public class SimulationService {
     private final ExecutorService executor;
 
     public SimulationService(){
-        // get the amount of avaliable threads and creates a pool for them
+        // get the amount of available threads and creates a pool for them
         int numberOfThreads = Runtime.getRuntime().availableProcessors();
         executor = Executors.newFixedThreadPool(numberOfThreads);
     }
@@ -58,7 +58,7 @@ public class SimulationService {
             forestCells.add(lineCells);
         }
 
-        // now the fire starting point will be setted using random index.
+        // now the fire starting point will be set using random index.
         forestCells.get(random.nextInt(height)).get(random.nextInt(width)).startBurning(burningTime);
 
         List<Direction> windDirections = new ArrayList<>(Arrays.asList(Direction.values()));
@@ -84,10 +84,10 @@ public class SimulationService {
 
         List<Callable<Forest>> taskList = new ArrayList<>();
         
-        // Will organize the tasks ate half of each row.
+        // Will organize the tasks at half of each row.
         for(int i = 0; i < this.currentForest.getCells().size(); i++){
             
-            // creates 2 tasks for the 2 halfs of a row
+            // creates 2 tasks for the 2 halves of a row
             SimulationTask taskHalfOfARow = new SimulationTask(this.currentForest, bufferForest, i, 0, halfOfCols);
             SimulationTask taskLastOfARow = new SimulationTask(this.currentForest, bufferForest, i, halfOfCols, finalCol);
             

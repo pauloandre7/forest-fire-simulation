@@ -96,7 +96,7 @@ public class SimulationTask implements Callable<Forest>{
             // if the wind is coming from north and one of the burning cell is in the way
             // the wind prob will be considered.
             if(burningCell.getCellDirection() == currentForest.getWindDirection()){
-                // If the speed is 100, the limite in 300 will result in 0,33% 
+                // If the speed is 100, the limit of 300 will result in 0.33 (33%)
                 windProb = currentForest.getWindSpeed() / WIND_BONUS_LIMITER;
             }
             // each burning cell with less relief will add 5% to reliefProb
@@ -120,7 +120,7 @@ public class SimulationTask implements Callable<Forest>{
         for(int i = startCol; i < finalCol; i++){
             Cell currentCell = currentForest.getCells().get(rowOfWork).get(i);
 
-            // if the cell is already burning, them will use the method to 
+            // if the cell is already burning, then will use the method to 
             // decrease the timer of burning or turn into ash
             if(currentCell.getState() == CellState.BURNING) {
                 bufferForest.getCells().get(rowOfWork).get(i).updateBurningState();
