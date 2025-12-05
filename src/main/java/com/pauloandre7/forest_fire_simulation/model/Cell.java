@@ -55,6 +55,7 @@ public class Cell {
         this.row = cellOriginal.row;
         this.col = cellOriginal.col;
         this.state = cellOriginal.state;
+        this.burningTime = cellOriginal.burningTime;
         this.moisture = cellOriginal.moisture;
         this.relief = cellOriginal.relief;
     }
