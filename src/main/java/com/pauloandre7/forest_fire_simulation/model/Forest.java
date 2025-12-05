@@ -1,5 +1,6 @@
 package com.pauloandre7.forest_fire_simulation.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,9 +52,25 @@ public class Forest {
     }
 
     public Forest(Forest originalForest){
+        
         this.height = originalForest.height;
         this.width = originalForest.width;
-        this.cells = originalForest.cells;
+
+        this.cells = new ArrayList<>();
+
+        // for loop to make a copy of all cell in the grid
+        // This 'for' will get each row from the grid cells and use it in the inner 'for' loop
+        for(List<Cell> originalRow : originalForest.cells){
+            List<Cell> newRow = new ArrayList<>();
+            
+            for(Cell originalCell : originalRow){
+                // Uses deep copy from Cell class to create new rows
+                newRow.add(new Cell(originalCell));
+            }
+
+            this.cells.add(newRow);
+        }
+
         this.windDirection = originalForest.windDirection;
         this.windSpeed = originalForest.windSpeed;
         this.burningTime = originalForest.burningTime;
