@@ -24,11 +24,25 @@ public class SimulationService {
     private final double BASE_BURNING_PROBABILITY = 0.125;
     private Forest currentForest;
     private final ExecutorService executor;
+    private boolean isRunning = false;
 
     public SimulationService(){
         // get the amount of available threads and creates a pool for them
         int numberOfThreads = Runtime.getRuntime().availableProcessors();
         executor = Executors.newFixedThreadPool(numberOfThreads);
+    }
+
+    public void startSimulation(){
+        isRunning = true;
+    }
+
+    public void stopSimulation(){
+        isRunning = false;
+    }
+
+    // with this method, the sheduler will know the current service status
+    public boolean isRunning(){
+        return isRunning;
     }
 
     public void generateRandomForest(int height, int width, int burningTime){
