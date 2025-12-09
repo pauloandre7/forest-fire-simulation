@@ -18,6 +18,17 @@ import com.pauloandre7.forest_fire_simulation.model.Direction;
 import com.pauloandre7.forest_fire_simulation.model.Forest;
 import com.pauloandre7.forest_fire_simulation.parallel.SimulationTask;
 
+/**
+ * @author pauloandre7
+ * 
+ * This class holds an instance of Forest and manipulates it to provide responses for controller's 
+ * requests.
+ * The method to calculate the logic that change state at the cellular automaton uses Tasks and pool of
+ * Threads.
+ * Furthermore, the method is managed by Scheduler class, that holds an instance of Service and its 
+ * managed by SpringBoot. So, to avoid infinite cycles, the service have attributes currentGeneration 
+ * and maxGeneration to control the number of cycles.
+*/
 @Service
 public class SimulationService {
     // one cell has 8 neighbors. each neighbor burning will increase base Prob. in 0.12
