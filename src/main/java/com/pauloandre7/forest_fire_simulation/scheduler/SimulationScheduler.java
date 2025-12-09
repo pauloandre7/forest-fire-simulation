@@ -26,6 +26,7 @@ public class SimulationScheduler {
 
         if(service.isRunning()){
             service.calculateNextGeneration();
+            service.iterateGeneration();
         }
     }
 }

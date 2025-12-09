@@ -24,7 +24,12 @@ public class SimulationService {
     private final double BASE_BURNING_PROBABILITY = 0.125;
     private Forest currentForest;
     private final ExecutorService executor;
-    private boolean isRunning = false;
+
+    // volatile tells jvm to read this variable everytime and avoid synchronization bugs
+    private volatile boolean isRunning = false;
+    private int currentGeneration;
+    // Basically, define the number of cycles for the simulation.
+    private int maxGeneration; 
 
     public SimulationService(){
         // get the amount of available threads and creates a pool for them
@@ -32,12 +37,21 @@ public class SimulationService {
         executor = Executors.newFixedThreadPool(numberOfThreads);
     }
 
-    public void startSimulation(){
+    public void startSimulation(int maxGeneration){
         isRunning = true;
+        this.currentGeneration = 0;
+        this.maxGeneration = maxGeneration;
     }
 
     public void stopSimulation(){
         isRunning = false;
+    }
+
+    public void iterateGeneration(){
+        currentGeneration++;
+        if(currentGeneration == maxGeneration){
+            stopSimulation();
+        }
     }
 
     // with this method, the sheduler will know the current service status
