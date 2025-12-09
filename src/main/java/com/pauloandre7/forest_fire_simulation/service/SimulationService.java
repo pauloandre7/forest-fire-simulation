@@ -38,9 +38,9 @@ public class SimulationService {
 
     // volatile tells jvm to read this variable everytime and avoid synchronization bugs
     private volatile boolean isRunning = false;
-    private int currentGeneration;
+    private volatile int currentGeneration;
     // Basically, define the number of cycles for the simulation.
-    private int maxGeneration; 
+    private volatile int maxGeneration; 
 
     public SimulationService(){
         // get the amount of available threads and creates a pool for them
