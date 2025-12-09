@@ -18,6 +18,17 @@ import com.pauloandre7.forest_fire_simulation.model.Direction;
 import com.pauloandre7.forest_fire_simulation.model.Forest;
 import com.pauloandre7.forest_fire_simulation.parallel.SimulationTask;
 
+/**
+ * @author pauloandre7
+ * 
+ * This class holds an instance of Forest and manipulates it to provide responses for controller's 
+ * requests.
+ * The method to calculate the logic that change state at the cellular automaton uses Tasks and pool of
+ * Threads.
+ * Furthermore, the method is managed by Scheduler class, that holds an instance of Service and its 
+ * managed by SpringBoot. So, to avoid infinite cycles, the service have attributes currentGeneration 
+ * and maxGeneration to control the number of cycles.
+*/
 @Service
 public class SimulationService {
     // one cell has 8 neighbors. each neighbor burning will increase base Prob. in 0.12
@@ -25,10 +36,41 @@ public class SimulationService {
     private Forest currentForest;
     private final ExecutorService executor;
 
+    // volatile tells jvm to read this variable everytime and avoid synchronization bugs
+    private volatile boolean isRunning = false;
+    private volatile int currentGeneration;
+    // Basically, define the number of cycles for the simulation.
+    private volatile int maxGeneration; 
+
     public SimulationService(){
         // get the amount of available threads and creates a pool for them
         int numberOfThreads = Runtime.getRuntime().availableProcessors();
         executor = Executors.newFixedThreadPool(numberOfThreads);
+    }
+
+    public synchronized  void startSimulation(int maxGeneration){
+        if(isRunning){
+            throw new IllegalStateException("Simulation is already running.");
+        }
+        isRunning = true;
+        this.currentGeneration = 0;
+        this.maxGeneration = maxGeneration;
+    }
+
+    public synchronized void stopSimulation(){
+        isRunning = false;
+    }
+
+    public synchronized void iterateGeneration(){
+        currentGeneration++;
+        if(currentGeneration == maxGeneration){
+            stopSimulation();
+        }
+    }
+
+    // with this method, the sheduler will know the current service status
+    public boolean isRunning(){
+        return isRunning;
     }
 
     public void generateRandomForest(int height, int width, int burningTime){
