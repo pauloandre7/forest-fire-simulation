@@ -48,7 +48,7 @@ public class SimulationService {
         executor = Executors.newFixedThreadPool(numberOfThreads);
     }
 
-    public void startSimulation(int maxGeneration){
+    public synchronized  void startSimulation(int maxGeneration){
         if(isRunning){
             throw new IllegalStateException("Simulation is already running.");
         }
@@ -57,11 +57,11 @@ public class SimulationService {
         this.maxGeneration = maxGeneration;
     }
 
-    public void stopSimulation(){
+    public synchronized void stopSimulation(){
         isRunning = false;
     }
 
-    public void iterateGeneration(){
+    public synchronized void iterateGeneration(){
         currentGeneration++;
         if(currentGeneration == maxGeneration){
             stopSimulation();
