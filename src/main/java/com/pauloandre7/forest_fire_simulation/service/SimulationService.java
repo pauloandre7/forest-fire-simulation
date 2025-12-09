@@ -49,6 +49,9 @@ public class SimulationService {
     }
 
     public void startSimulation(int maxGeneration){
+        if(isRunning){
+            throw new IllegalStateException("Simulation is already running.");
+        }
         isRunning = true;
         this.currentGeneration = 0;
         this.maxGeneration = maxGeneration;
