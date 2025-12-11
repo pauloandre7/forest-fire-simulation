@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
+import com.pauloandre7.forest_fire_simulation.dto.CreateRandomForestRequestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
@@ -100,7 +101,7 @@ public class SimulationService {
         return new CurrentForestDTO(grid, this.currentGeneration, this.isRunning);
     }
 
-    public void generateRandomForest(int height, int width, int burningTime){
+    public void generateRandomForest(CreateRandomForestRequestDTO randomForestDto){
 
         Random random = new Random();
 
@@ -113,10 +114,10 @@ public class SimulationService {
         // remove Burning from the list, because i don't want to randomize this value right now
         cellStates.remove(CellState.BURNING);
 
-        for(int i = 0; i < height; i++){
+        for(int i = 0; i < randomForestDto.getHeight(); i++){
             List<Cell> lineCells = new ArrayList<>();
 
-            for(int j = 0; j < width; j++){
+            for(int j = 0; j < randomForestDto.getWidth(); j++){
                 
                 int randomIndex = random.nextInt(cellStates.size());
                 double randomMoisture = random.nextDouble(1.0);
@@ -128,12 +129,16 @@ public class SimulationService {
         }
 
         // now the fire starting point will be set using random index.
-        forestCells.get(random.nextInt(height)).get(random.nextInt(width)).startBurning(burningTime);
+        forestCells.get(random.nextInt(randomForestDto.getHeight()))
+                    .get(random.nextInt(randomForestDto.getWidth()))
+                    .startBurning(randomForestDto.getBurningTime());
 
         List<Direction> windDirections = new ArrayList<>(Arrays.asList(Direction.values()));
         Direction randomWindDirection = windDirections.get(random.nextInt(windDirections.size()));
 
-        this.currentForest = new Forest(height, width, forestCells, randomWindDirection, random.nextDouble(1.0), burningTime, BASE_BURNING_PROBABILITY);
+        this.currentForest = new Forest(randomForestDto.getHeight(), randomForestDto.getWidth(), 
+                                        forestCells, randomWindDirection, random.nextDouble(1.0),
+                                        randomForestDto.getBurningTime(), BASE_BURNING_PROBABILITY);
     }
 
     public void initializeForest(int height, int width, List<List<Cell>> forestCells, 
