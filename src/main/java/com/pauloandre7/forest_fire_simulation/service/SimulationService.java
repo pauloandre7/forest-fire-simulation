@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
-import com.pauloandre7.forest_fire_simulation.dto.SimulationStatusDTO;
+import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
 import com.pauloandre7.forest_fire_simulation.model.Direction;
@@ -74,7 +74,7 @@ public class SimulationService {
         return isRunning;
     }
 
-    public SimulationStatusDTO getForestForDisplay(){
+    public CurrentForestDTO getForestForDisplay(){
 
         // To avoid erros by forest that was not initialized.
         if(this.currentForest == null){
@@ -97,7 +97,7 @@ public class SimulationService {
             grid.add(newRow);
         }
 
-        return new SimulationStatusDTO(grid, this.currentGeneration, this.isRunning);
+        return new CurrentForestDTO(grid, this.currentGeneration, this.isRunning);
     }
 
     public void generateRandomForest(int height, int width, int burningTime){
