@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author pauloandre7
@@ -13,10 +13,10 @@ import lombok.Getter;
  * This class optimize the communication between Service and Controller and protect Forest model.
  */
 @Getter
-@AllArgsConstructor
-public class SimulationStatusDTO {
+@RequiredArgsConstructor
+public class CurrentForestDTO {
 
-    private List<List<Cell>> grid;
-    private int currentGeneration;
-    private boolean isRunning;
+    private final List<List<Cell>> grid;
+    private final int currentGeneration;
+    private final boolean isRunning;
 }
