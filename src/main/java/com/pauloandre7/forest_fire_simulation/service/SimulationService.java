@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
+import com.pauloandre7.forest_fire_simulation.dto.SimulationStatusDTO;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
 import com.pauloandre7.forest_fire_simulation.model.Direction;
@@ -71,6 +72,32 @@ public class SimulationService {
     // with this method, the sheduler will know the current service status
     public boolean isRunning(){
         return isRunning;
+    }
+
+    public SimulationStatusDTO getForestForDisplay(){
+
+        // To avoid erros by forest that was not initialized.
+        if(this.currentForest == null){
+            throw new IllegalStateException("The forest wasn't initialized yet.");
+        }
+
+        if(this.currentForest.getCells().isEmpty()){
+            throw new IllegalStateException("The forest is empty.");
+        }
+                
+        List<List<Cell>> grid = new ArrayList<>();
+        
+        for(List<Cell> row : this.currentForest.getCells()){
+            List<Cell> newRow = new ArrayList<>();
+            
+            for(Cell cell : row){
+                // Uses deepCopy constructor from Cell class to create a new instance.
+                newRow.add(new Cell(cell));
+            }
+            grid.add(newRow);
+        }
+
+        return new SimulationStatusDTO(grid, this.currentGeneration, this.isRunning);
     }
 
     public void generateRandomForest(int height, int width, int burningTime){
