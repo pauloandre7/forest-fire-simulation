@@ -106,6 +106,10 @@ public class SimulationService {
 
     public void generateRandomForest(RandomForestRequest randomForestDto){
 
+        if(this.isRunning){
+            throw new IllegalStateException("The simulation must be stopped to initialize a new Forest.");
+        }
+        
         Random random = new Random();
 
         List<List<Cell>> forestCells = new ArrayList<>();
