@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 import org.springframework.stereotype.Service;
 
 import com.pauloandre7.forest_fire_simulation.dto.CellCoordinatesRequest;
+import com.pauloandre7.forest_fire_simulation.dto.CellStateDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CustomForestRequest;
 import com.pauloandre7.forest_fire_simulation.dto.RandomForestRequest;
@@ -89,14 +90,13 @@ public class SimulationService {
             throw new EmptyForestException("The forest is empty.");
         }
                 
-        List<List<Cell>> grid = new ArrayList<>();
-        
+        List<List<CellStateDTO>> grid = new ArrayList<>();
+        // This for-structure gets the row from the grid and then gets the cell from the row
         for(List<Cell> row : this.currentForest.getCells()){
-            List<Cell> newRow = new ArrayList<>();
+            List<CellStateDTO> newRow = new ArrayList<>();
             
             for(Cell cell : row){
-                // Uses deepCopy constructor from Cell class to create a new instance.
-                newRow.add(new Cell(cell));
+                newRow.add(new CellStateDTO(cell.getState()));
             }
             grid.add(newRow);
         }
