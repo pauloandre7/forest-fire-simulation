@@ -109,17 +109,17 @@ public class SimulationService {
         if(this.isRunning){
             throw new IllegalStateException("The simulation must be stopped to initialize a new Forest.");
         }
-        
+
         Random random = new Random();
 
         List<List<Cell>> forestCells = new ArrayList<>();
         
-
         // get the values of Enum CellState and parse to List.
         List<CellState> cellStates = new ArrayList<>(Arrays.asList(CellState.values()));
 
-        // remove Burning from the list, because i don't want to randomize this value right now
+        // remove Burning and Ash from the list, because i don't want to randomize those values right now
         cellStates.remove(CellState.BURNING);
+        cellStates.remove(CellState.ASH);
 
         for(int i = 0; i < randomForestDto.getHeight(); i++){
             List<Cell> lineCells = new ArrayList<>();
