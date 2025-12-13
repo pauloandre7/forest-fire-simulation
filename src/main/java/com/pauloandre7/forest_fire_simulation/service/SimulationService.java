@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.pauloandre7.forest_fire_simulation.dto.CreateRandomForestRequestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
+import com.pauloandre7.forest_fire_simulation.dto.InitializeForestRequestDTO;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
 import com.pauloandre7.forest_fire_simulation.model.Direction;
@@ -141,11 +142,16 @@ public class SimulationService {
                                         randomForestDto.getBurningTime(), BASE_BURNING_PROBABILITY);
     }
 
-    public void initializeForest(int height, int width, List<List<Cell>> forestCells, 
-        Direction windDirection, double windSpeed, int burningTime){
+    public void initializeForest(InitializeForestRequestDTO initializeForestDto){
         
-        this.currentForest = new Forest(height, width, forestCells, windDirection, 
-            windSpeed, burningTime, BASE_BURNING_PROBABILITY);
+        this.currentForest = new Forest(initializeForestDto.getHeight(), 
+                                initializeForestDto.getWidth(), 
+                                initializeForestDto.getForestCells(), 
+                                initializeForestDto.getWindDirection(), 
+                                initializeForestDto.getWindSpeed(), 
+                                initializeForestDto.getBurningTime(), 
+                                this.BASE_BURNING_PROBABILITY
+        );
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
