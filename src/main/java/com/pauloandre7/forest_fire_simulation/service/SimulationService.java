@@ -16,6 +16,7 @@ import com.pauloandre7.forest_fire_simulation.dto.CellCoordinatesRequest;
 import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CustomForestRequest;
 import com.pauloandre7.forest_fire_simulation.dto.RandomForestRequest;
+import com.pauloandre7.forest_fire_simulation.exception.EmptyForestException;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
 import com.pauloandre7.forest_fire_simulation.model.Direction;
@@ -85,7 +86,7 @@ public class SimulationService {
         }
 
         if(this.currentForest.getCells().isEmpty()){
-            throw new IllegalStateException("The forest is empty.");
+            throw new EmptyForestException("The forest is empty.");
         }
                 
         List<List<Cell>> grid = new ArrayList<>();
