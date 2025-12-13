@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CreateRandomForestRequestDTO{
+public class RandomForestRequest{
     private final int height;
     private final int width;
     private final int burningTime;

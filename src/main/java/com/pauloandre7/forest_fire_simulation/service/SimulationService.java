@@ -13,9 +13,9 @@ import java.util.concurrent.Future;
 import org.springframework.stereotype.Service;
 
 import com.pauloandre7.forest_fire_simulation.dto.CellCoordinatesRequest;
-import com.pauloandre7.forest_fire_simulation.dto.CreateRandomForestRequestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
-import com.pauloandre7.forest_fire_simulation.dto.InitializeForestRequestDTO;
+import com.pauloandre7.forest_fire_simulation.dto.CustomForestRequest;
+import com.pauloandre7.forest_fire_simulation.dto.RandomForestRequest;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
 import com.pauloandre7.forest_fire_simulation.model.Direction;
@@ -103,7 +103,7 @@ public class SimulationService {
         return new CurrentForestDTO(grid, this.currentGeneration, this.isRunning);
     }
 
-    public void generateRandomForest(CreateRandomForestRequestDTO randomForestDto){
+    public void generateRandomForest(RandomForestRequest randomForestDto){
 
         Random random = new Random();
 
@@ -143,7 +143,7 @@ public class SimulationService {
                                         randomForestDto.getBurningTime(), BASE_BURNING_PROBABILITY);
     }
 
-    public void initializeForest(InitializeForestRequestDTO initializeForestDto){
+    public void initializeForest(CustomForestRequest initializeForestDto){
         
         if(this.isRunning){
             throw new IllegalStateException("The simulation must be stopped to initialize a new Forest.");

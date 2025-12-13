@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public class InitializeForestRequestDTO {
+public class CustomForestRequest {
     private final int height;
     private final int width;
     private final List<List<Cell>> forestCells;
