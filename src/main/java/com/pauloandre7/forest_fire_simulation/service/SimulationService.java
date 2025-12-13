@@ -161,6 +161,14 @@ public class SimulationService {
     }
 
     public void igniteCell(CellCoordinatesRequest cellCoordinates){
+        if(this.currentForest == null){
+            throw new IllegalStateException("The forest wasn't initialized yet.");
+        }
+
+        if(this.currentForest.getCells().isEmpty()){
+            throw new EmptyForestException("The forest is empty.");
+        }
+        
         this.currentForest.getCells()
             .get(cellCoordinates.getX())
             .get(cellCoordinates.getY())
