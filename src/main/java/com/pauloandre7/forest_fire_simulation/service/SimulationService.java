@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
+import com.pauloandre7.forest_fire_simulation.dto.CellCoordinatesRequest;
 import com.pauloandre7.forest_fire_simulation.dto.CreateRandomForestRequestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
 import com.pauloandre7.forest_fire_simulation.dto.InitializeForestRequestDTO;
@@ -144,6 +145,10 @@ public class SimulationService {
 
     public void initializeForest(InitializeForestRequestDTO initializeForestDto){
         
+        if(this.isRunning){
+            throw new IllegalStateException("The simulation must be stopped to initialize a new Forest.");
+        }
+
         this.currentForest = new Forest(initializeForestDto.getHeight(), 
                                 initializeForestDto.getWidth(), 
                                 initializeForestDto.getForestCells(), 
@@ -152,6 +157,13 @@ public class SimulationService {
                                 initializeForestDto.getBurningTime(), 
                                 this.BASE_BURNING_PROBABILITY
         );
+    }
+
+    public void igniteCell(CellCoordinatesRequest cellCoordinates){
+        this.currentForest.getCells()
+            .get(cellCoordinates.getX())
+            .get(cellCoordinates.getY())
+            .startBurning(currentForest.getBurningTime());
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
