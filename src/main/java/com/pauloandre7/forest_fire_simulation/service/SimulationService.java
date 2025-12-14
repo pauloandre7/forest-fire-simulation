@@ -174,8 +174,8 @@ public class SimulationService {
         }
         
         this.currentForest.getCells()
-            .get(cellCoordinates.getX())
             .get(cellCoordinates.getY())
+            .get(cellCoordinates.getX())
             .startBurning(currentForest.getBurningTime());
     }
 
