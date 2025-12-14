@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
  * @author pauloandre7
  * 
  * DTO class to receive the body of igniteCell request. Will be used to
- * get the coordinates to ignite a specifc cell.
+ * get the coordinates to ignite a specific cell.
  */
 @Getter
 @RequiredArgsConstructor

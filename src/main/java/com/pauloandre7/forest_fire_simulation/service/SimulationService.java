@@ -81,7 +81,7 @@ public class SimulationService {
 
     public CurrentForestDTO getForestForDisplay(){
 
-        // To avoid erros by forest that was not initialized.
+        // To avoid errors by forest that was not initialized.
         if(this.currentForest == null){
             throw new IllegalStateException("The forest wasn't initialized yet.");
         }

@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
  * Controller to manage the Fire Forest Simulation
  * <p>
  * This class provides endpoint REST to initialize a Custom Forest,
- * initialize a random forest, to start and stop the siimulation, to 
+ * initialize a random forest, to start and stop the simulation, to 
  * burn a specific cell and to get a forest to display.
  * </p>
  *
@@ -54,7 +54,7 @@ public class SimulationController {
      * </ul>
      * </p>
      *
-     * @param initializeForestDto the JSON object cointaining all the values for a new fores
+     * @param initializeForestDto the JSON object containing all the values for a new forest
      * @return {@code ResponseEntity} with confirmation string
      * @throws IllegalStateException if the simulation is already running (returns 204).
      */
@@ -62,7 +62,7 @@ public class SimulationController {
     public ResponseEntity<String> initializeForest(@RequestBody CustomForestRequest initializeForestDto) {
         try{
             simulationService.initializeForest(initializeForestDto);
-            return ResponseEntity.ok("The custom forest was created succesfully");
+            return ResponseEntity.ok("The custom forest was created successfully");
             
         }catch(IllegalStateException e){
             return new ResponseEntity<>("Simulation must be stopped to initialize a Forest.", 
@@ -135,7 +135,7 @@ public class SimulationController {
      * <p>
      * Toggle on the execution status and starts the simulation. Needs a forest to calculate.
      * <ul>
-     * <li>{@code maxGeneration} - the amount of cicles of the simulation execution.</li>
+     * <li>{@code maxGeneration} - the amount of cycles of the simulation execution.</li>
      * </ul>
      * </p>
      *
@@ -182,7 +182,7 @@ public class SimulationController {
      * @throws IllegalStateException if the forest wasn't initialized (returns 204).
      * @throws EmptyForestException if the forest is empty (returns 404)
      */
-    @PostMapping("forest/ignite")
+    @PostMapping("/forest/ignite")
     public ResponseEntity<String> igniteCell(@RequestBody CellCoordinatesRequest cellCoordinates){
         try{
             simulationService.igniteCell(cellCoordinates);
