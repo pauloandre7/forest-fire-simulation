@@ -12,6 +12,12 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
+import com.pauloandre7.forest_fire_simulation.dto.CellCoordinatesRequest;
+import com.pauloandre7.forest_fire_simulation.dto.CellStateDTO;
+import com.pauloandre7.forest_fire_simulation.dto.CurrentForestDTO;
+import com.pauloandre7.forest_fire_simulation.dto.CustomForestRequest;
+import com.pauloandre7.forest_fire_simulation.dto.RandomForestRequest;
+import com.pauloandre7.forest_fire_simulation.exception.EmptyForestException;
 import com.pauloandre7.forest_fire_simulation.model.Cell;
 import com.pauloandre7.forest_fire_simulation.model.CellState;
 import com.pauloandre7.forest_fire_simulation.model.Direction;
@@ -73,23 +79,52 @@ public class SimulationService {
         return isRunning;
     }
 
-    public void generateRandomForest(int height, int width, int burningTime){
+    public CurrentForestDTO getForestForDisplay(){
+
+        // To avoid errors by forest that was not initialized.
+        if(this.currentForest == null){
+            throw new IllegalStateException("The forest wasn't initialized yet.");
+        }
+
+        if(this.currentForest.getCells().isEmpty()){
+            throw new EmptyForestException("The forest is empty.");
+        }
+                
+        List<List<CellStateDTO>> grid = new ArrayList<>();
+        // This for-structure gets the row from the grid and then gets the cell from the row
+        for(List<Cell> row : this.currentForest.getCells()){
+            List<CellStateDTO> newRow = new ArrayList<>();
+            
+            for(Cell cell : row){
+                newRow.add(new CellStateDTO(cell.getState()));
+            }
+            grid.add(newRow);
+        }
+
+        return new CurrentForestDTO(grid, this.currentGeneration, this.isRunning);
+    }
+
+    public void generateRandomForest(RandomForestRequest randomForestDto){
+
+        if(this.isRunning){
+            throw new IllegalStateException("The simulation must be stopped to initialize a new Forest.");
+        }
 
         Random random = new Random();
 
         List<List<Cell>> forestCells = new ArrayList<>();
         
-
         // get the values of Enum CellState and parse to List.
         List<CellState> cellStates = new ArrayList<>(Arrays.asList(CellState.values()));
 
-        // remove Burning from the list, because i don't want to randomize this value right now
+        // remove Burning and Ash from the list, because i don't want to randomize those values right now
         cellStates.remove(CellState.BURNING);
+        cellStates.remove(CellState.ASH);
 
-        for(int i = 0; i < height; i++){
+        for(int i = 0; i < randomForestDto.getHeight(); i++){
             List<Cell> lineCells = new ArrayList<>();
 
-            for(int j = 0; j < width; j++){
+            for(int j = 0; j < randomForestDto.getWidth(); j++){
                 
                 int randomIndex = random.nextInt(cellStates.size());
                 double randomMoisture = random.nextDouble(1.0);
@@ -101,19 +136,47 @@ public class SimulationService {
         }
 
         // now the fire starting point will be set using random index.
-        forestCells.get(random.nextInt(height)).get(random.nextInt(width)).startBurning(burningTime);
+        forestCells.get(random.nextInt(randomForestDto.getHeight()))
+                    .get(random.nextInt(randomForestDto.getWidth()))
+                    .startBurning(randomForestDto.getBurningTime());
 
         List<Direction> windDirections = new ArrayList<>(Arrays.asList(Direction.values()));
         Direction randomWindDirection = windDirections.get(random.nextInt(windDirections.size()));
 
-        this.currentForest = new Forest(height, width, forestCells, randomWindDirection, random.nextDouble(1.0), burningTime, BASE_BURNING_PROBABILITY);
+        this.currentForest = new Forest(randomForestDto.getHeight(), randomForestDto.getWidth(), 
+                                        forestCells, randomWindDirection, random.nextDouble(1.0),
+                                        randomForestDto.getBurningTime(), BASE_BURNING_PROBABILITY);
     }
 
-    public void initializeForest(int height, int width, List<List<Cell>> forestCells, 
-        Direction windDirection, double windSpeed, int burningTime){
+    public void initializeForest(CustomForestRequest initializeForestDto){
         
-        this.currentForest = new Forest(height, width, forestCells, windDirection, 
-            windSpeed, burningTime, BASE_BURNING_PROBABILITY);
+        if(this.isRunning){
+            throw new IllegalStateException("The simulation must be stopped to initialize a new Forest.");
+        }
+
+        this.currentForest = new Forest(initializeForestDto.getHeight(), 
+                                initializeForestDto.getWidth(), 
+                                initializeForestDto.getForestCells(), 
+                                initializeForestDto.getWindDirection(), 
+                                initializeForestDto.getWindSpeed(), 
+                                initializeForestDto.getBurningTime(), 
+                                this.BASE_BURNING_PROBABILITY
+        );
+    }
+
+    public void igniteCell(CellCoordinatesRequest cellCoordinates){
+        if(this.currentForest == null){
+            throw new IllegalStateException("The forest wasn't initialized yet.");
+        }
+
+        if(this.currentForest.getCells().isEmpty()){
+            throw new EmptyForestException("The forest is empty.");
+        }
+        
+        this.currentForest.getCells()
+            .get(cellCoordinates.getY())
+            .get(cellCoordinates.getX())
+            .startBurning(currentForest.getBurningTime());
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
