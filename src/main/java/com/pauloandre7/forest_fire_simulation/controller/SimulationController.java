@@ -114,8 +114,8 @@ public class SimulationController {
      * </ul>
      * </p>
      * @return A {@link ResponseEntity} that contains the Forest DTO (grid[][], currentGeneration and isRunning) and 200 status (OK).
-     * @throws IllegalStateException if the forest wasn't initialized (returns 204).
-     * @throws EmptyForestException if the forest is empty (returns 404)
+     * @throws IllegalStateException if the forest wasn't initialized (returns 404).
+     * @throws EmptyForestException if the forest is empty (returns 204).
      */
     @GetMapping("/forest")
     public ResponseEntity<CurrentForestDTO> getForestForDisplay(){
@@ -124,9 +124,9 @@ public class SimulationController {
             return ResponseEntity.ok(currentForestDto);
 
         } catch(IllegalStateException e){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch(EmptyForestException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch(EmptyForestException e){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
@@ -139,7 +139,7 @@ public class SimulationController {
      * </ul>
      * </p>
      *
-     * @param startDto the JSON object cointaining maxGeneration param
+     * @param startDto the JSON object containing maxGeneration param
      * @return {@code ResponseEntity} with confirmation string
      * @throws IllegalStateException if the simulation is already running (returns 409).
      */ 
@@ -147,7 +147,7 @@ public class SimulationController {
     public ResponseEntity<String> startSimulation(@RequestBody SimulationStartRequest startDto){
         try{
             simulationService.startSimulation(startDto.getMaxGeneration());
-            return ResponseEntity.ok("Simulation started succesfully");
+            return ResponseEntity.ok("Simulation started successfully");
 
         }catch(IllegalStateException e){
             return new ResponseEntity<>("Simulation is already running.", 
@@ -164,7 +164,7 @@ public class SimulationController {
     @PostMapping("/stop")    
     public ResponseEntity<String> stopSimulation(){
         simulationService.stopSimulation();
-        return ResponseEntity.ok("Simulation stopped succesfully");
+        return ResponseEntity.ok("Simulation stopped successfully");
     }
 
     /**
@@ -177,10 +177,10 @@ public class SimulationController {
      * </ul>
      * </p>
      *
-     * @param cellCoordinates the JSON object cointaining the coordinates
+     * @param cellCoordinates the JSON object containing the coordinates
      * @return {@code ResponseEntity} with confirmation string
-     * @throws IllegalStateException if the forest wasn't initialized (returns 204).
-     * @throws EmptyForestException if the forest is empty (returns 404)
+     * @throws IllegalStateException if the forest wasn't initialized (returns 409).
+     * @throws EmptyForestException if the forest is empty (returns 204)
      */
     @PostMapping("/forest/ignite")
     public ResponseEntity<String> igniteCell(@RequestBody CellCoordinatesRequest cellCoordinates){
@@ -189,9 +189,9 @@ public class SimulationController {
             return ResponseEntity.ok("Cell burned succesfully.");
             
         } catch(IllegalStateException e){
-                return new ResponseEntity<>("The forest must be initialized.", HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("The forest must be initialized.", HttpStatus.CONFLICT);
         } catch(EmptyForestException e){
-            return new ResponseEntity<>("The forest is empty.", HttpStatus.NOT_FOUND);
-        }
+            return new ResponseEntity<>("The forest is empty.", HttpStatus.NO_CONTENT);
+        } // needs to catch index out of bounds too
     }
 }
