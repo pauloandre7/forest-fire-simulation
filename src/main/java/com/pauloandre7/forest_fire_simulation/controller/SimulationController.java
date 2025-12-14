@@ -180,7 +180,7 @@ public class SimulationController {
      * @param cellCoordinates the JSON object containing the coordinates
      * @return {@code ResponseEntity} with confirmation string
      * @throws IllegalStateException if the forest wasn't initialized (returns 409).
-     * @throws EmptyForestException if the forest is empty (returns 204)
+     * @throws EmptyForestException if the forest is empty (returns 409)
      */
     @PostMapping("/forest/ignite")
     public ResponseEntity<String> igniteCell(@RequestBody CellCoordinatesRequest cellCoordinates){
@@ -191,7 +191,7 @@ public class SimulationController {
         } catch(IllegalStateException e){
                 return new ResponseEntity<>("The forest must be initialized.", HttpStatus.CONFLICT);
         } catch(EmptyForestException e){
-            return new ResponseEntity<>("The forest is empty.", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("The forest is empty.", HttpStatus.CONFLICT);
         } // needs to catch index out of bounds too
     }
 }
