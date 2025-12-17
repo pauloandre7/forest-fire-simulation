@@ -172,6 +172,10 @@ public class SimulationService {
         if(this.currentForest.getCells().isEmpty()){
             throw new EmptyForestException("The forest is empty.");
         }
+
+        if(cellCoordinates.getX() > currentForest.getHeight() || cellCoordinates.getY() > currentForest.getWidth()){
+            throw new IndexOutOfBoundsException("The coordinates exceed the forest limits.");
+        }
         
         this.currentForest.getCells()
             .get(cellCoordinates.getY())
