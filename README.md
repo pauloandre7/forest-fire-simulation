@@ -1,6 +1,6 @@
 # Forest Fire Simulation
 <p align="center">
-  <img loading="lazy" src="https://img.shields.io/badge/Status-In_Development-green"/>
+  <img loading="lazy" src="https://img.shields.io/badge/Status-Paused-yellow"/>
   <img loading="lazy" src="https://img.shields.io/badge/UTFPR-ebd834"/>
   <img loading="lazy" src="https://img.shields.io/badge/Distributed_Systems-purple"/>
   <img loading="lazy" src="https://img.shields.io/badge/Spring_Boot-darkgreen"/>
@@ -13,13 +13,11 @@ but rather on applying concepts of Distributed Systems and Parallel Computing to
 The project will use a simplified, probability-based approach, avoiding complex differential equations. The simulation engine will be based on the `Cellular Automata (CA)` model.
 
 
-## Tecnologias Utilizadas
-
 - `JAVA`
 - `Maven`
 - `SpringBoot`
 
-## Autor
+## Author
 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/147359503?v=4" width=115><br><sub>Paulo André</sub>](https://github.com/pauloandre7)
 | :---: |
