@@ -1,27 +1,61 @@
-# Forest Fire Simulation
+## Forest Fire Simulation
+
 <p align="center">
-  <img loading="lazy" src="https://img.shields.io/badge/Status-Paused-yellow"/>
-  <img loading="lazy" src="https://img.shields.io/badge/UTFPR-ebd834"/>
-  <img loading="lazy" src="https://img.shields.io/badge/Distributed_Systems-purple"/>
-  <img loading="lazy" src="https://img.shields.io/badge/Spring_Boot-darkgreen"/>
+	<!-- Badges: substitua pelos badges reais se quiser -->
+	<img loading="lazy" src="https://img.shields.io/badge/Status-Development-brightgreen" alt="status"/>
+	<img loading="lazy" src="https://img.shields.io/badge/Java-21-orange" alt="java"/>
+	<img loading="lazy" src="https://img.shields.io/badge/Spring_Boot-2.7.x-darkgreen" alt="spring"/>
 </p>
 
-___
+_REST API to simulate forest fires based on cellular automata and probability._
 
-This project implements a software to simulate the spread of forest fires. The focus is not on absolute physical accuracy (as in complex forest engineering models), 
-but rather on applying concepts of Distributed Systems and Parallel Computing to solve a dynamic problem. \
-The project will use a simplified, probability-based approach, avoiding complex differential equations. The simulation engine will be based on the `Cellular Automata (CA)` model.
+## Description
+
+This API aims to simulate a forest fire. Using Cellular Automata logic, the forest area is distributed in a matrix, where wach cell represents a portion of that forest and has four possible states: Vegetation, Fire, Ashes and Empty.
+The API traverses the matrix with threads and calculates the possibility of ignition based on five variables: moisture, winds direction and speed, Relief and Neighbour Cells. The variables manipulates the ignition probability value and, in the end, a Monte Carlo test is performed using this value.
+
+### Cell States
+- **Vegetation:** represents some type of vegetation that serves as fuel for burning;
+- **Fire:** state of burning, where the cell can influence the burning of neighboring cells;
+- **Ashes:** follows the state of fire, making it impossible for that cell to reignite.
+- **Empty space:** represents a portion that does not serve as fuel for burning, such as land, lakes, rocks, etc.
 
 
-- `JAVA`
-- `Maven`
-- `SpringBoot`
+## Functionalities
 
-## Author
+- Simulation based on cellular automata with probabilistic rules.
+- Generation of random and customized forests.
+- Parallel/distributed execution of the simulation.
+- REST endpoints to control the simulation.
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/147359503?v=4" width=115><br><sub>Paulo André</sub>](https://github.com/pauloandre7)
-| :---: |
-  
+## Technologies used
+
+- **Language**: Java
+- **Build**: Maven
+- **Framework**: Spring Boot
+- **Concurrency**: ExecutorService / parallels tasks
+
+## How to use
+
+1. Build and execution with Maven (dev mode):
+
+```bash
+mvn spring-boot:run
+```
+
+2. Artifact Build and JAR execution:
+
+```bash
+mvn clean package
+java -jar target/forest-fire-simulation-0.0.1-SNAPSHOT.jar
+```
+
 ## License
-  Forest Fire Simulation is <a href="https://opensource.org/license/mit">MIT License</a>
+
+MIT license Copyright (c) 2025 Paulo André
+
+## Contact
+
+Paulo André — https://github.com/pauloandre7
+
 
